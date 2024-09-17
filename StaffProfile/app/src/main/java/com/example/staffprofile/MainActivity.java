@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView imgPhone;
+//    ImageView imgPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +22,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        imgPhone = (ImageView) findViewById(R.id.ic_Phone);
+//        imgPhone = (ImageView) findViewById(R.id.ic_Phone);
     }
-    imgPhone.bringTo
-
-
-    imgPhone.setOnClickListener(new View.OnClickListener(){
-
-    })
+//    imgPhone.bringTo
+//
+//
+//    imgPhone.setOnClickListener(new View.OnClickListener(){
+    
 }
