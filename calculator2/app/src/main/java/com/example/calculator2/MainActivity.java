@@ -1,8 +1,11 @@
-package com.haianh610.calculator;
+package com.example.calculator2;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +20,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        initControl();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        initControl();
     }
 
-    EditText etSo1,etSo2;
+    EditText etSo1;
+    EditText etSo2;
+    Button btnTong;
+    Button btnTru;
+    Button btnNhan;
+    Button btnChia;
+    Button btnUCLN;
     TextView txtKetQua;
-    Button btnCong,btnTru,btnNhan,btnChia,btnChiaDu;
+    Button btnThoat;
 
     private boolean checkET(){
         if (etSo1.getText().toString().isEmpty() || etSo2.getText().toString().isEmpty()){
@@ -38,19 +47,21 @@ public class MainActivity extends AppCompatActivity {
             return false;
     }
 
-    private void initControl() {
+    void divBy0(){
+        Toast.makeText(this,"div 0!",Toast.LENGTH_SHORT).show();
+    }
+    private void  initControl(){
         etSo1 = findViewById(R.id.etSo1);
         etSo2 = findViewById(R.id.etSo2);
-        txtKetQua = findViewById(R.id.txtKetQua);
-        btnCong = findViewById(R.id.btnClick);
-
+        btnTong = findViewById(R.id.btnTong);
         btnTru = findViewById(R.id.btnTru);
         btnNhan = findViewById(R.id.btnNhan);
-        btnChia = findViewById(R.id.btnCHia);
-        btnChiaDu = findViewById(R.id.btnChiaDu);
+        btnChia = findViewById(R.id.btnChia);
+        btnUCLN = findViewById(R.id.btnUCLN);
+        txtKetQua = findViewById(R.id.txtKetQua);
+        btnThoat = findViewById(R.id.btnThoat);
 
-
-        btnCong.setOnClickListener(new View.OnClickListener() {
+        btnTong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!checkET()) {
@@ -58,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     int y = Integer.parseInt(etSo2.getText().toString());
                     int ketQua = x + y;
                     txtKetQua.setText(String.valueOf(ketQua));
-                } else {
-                    ;
                 }
             }
         });
@@ -72,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     int y = Integer.parseInt(etSo2.getText().toString());
                     int ketQua = x - y;
                     txtKetQua.setText(String.valueOf(ketQua));
-                } else {
-                    ;
                 }
             }
         });
@@ -86,38 +93,46 @@ public class MainActivity extends AppCompatActivity {
                     int y = Integer.parseInt(etSo2.getText().toString());
                     int ketQua = x * y;
                     txtKetQua.setText(String.valueOf(ketQua));
-                } else {
-                    ;
                 }
             }
         });
-
         btnChia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!checkET()) {
                     int x = Integer.parseInt(String.valueOf(etSo1.getText()));
                     int y = Integer.parseInt(etSo2.getText().toString());
-                    int ketQua = x / y;
-                    txtKetQua.setText(String.valueOf(ketQua));
-                } else {
-                    ;
+                    if (y!=0){
+                        int ketQua = x / y;
+                        txtKetQua.setText(String.valueOf(ketQua));
+                    }
+                    else divBy0();
                 }
             }
         });
-
-        btnChiaDu.setOnClickListener(new View.OnClickListener() {
+        btnUCLN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!checkET()) {
+                if(!checkET()){
                     int x = Integer.parseInt(String.valueOf(etSo1.getText()));
                     int y = Integer.parseInt(etSo2.getText().toString());
-                    int ketQua = x % y;
+                    int ketQua = findGCD(x,y);
                     txtKetQua.setText(String.valueOf(ketQua));
-                } else {
-                    ;
                 }
             }
         });
+        btnThoat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+    private static int findGCD(int x, int y) {
+        //base case
+        if(y== 0){
+            return x;
+        }
+        return findGCD(y, x%y);
     }
 }
